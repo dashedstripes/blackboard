@@ -42,9 +42,18 @@ colorTiles.forEach((val, index) => {
   context.fillRect(val.x, val.y, val.width, val.height)
 })
 
+// stored paths
+
+let paths = []
+
 // mouse movements
 
 let isDrawing = false
+let currentPath = {
+  color: '',
+  start: {},
+  movement: []
+}
 
 document.addEventListener('mousedown', (e) => {
   let x = e.clientX
@@ -65,6 +74,9 @@ document.addEventListener('mousedown', (e) => {
     isDrawing = true
     context.beginPath()
     context.moveTo(x, y)
+    currentPath.color = selectedColor
+    currentPath.start.x = x
+    currentPath.start.y = y
   }
 })
 
@@ -72,6 +84,10 @@ document.addEventListener('mousemove', (e) => {
   if(isDrawing) {
     if(e.clientX > (colorTiles[0].x + colorTiles[0].width) + 5) {
       context.strokeStyle = selectedColor
+      currentPath.movement.push({
+        x: e.clientX,
+        y: e.clientY
+      })
       context.lineTo(e.clientX, e.clientY)
       context.stroke()
     }
@@ -80,5 +96,14 @@ document.addEventListener('mousemove', (e) => {
 
 document.addEventListener('mouseup', (e) => {
   isDrawing = false
+  if(e.clientX > (colorTiles[0].x + colorTiles[0].width) + 5) {
+    paths.push(currentPath)
+    currentPath = {
+      color: '',
+      start: {},
+      movement: []
+    }
+    console.log(paths)
+  }
 })
 
