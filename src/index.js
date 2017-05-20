@@ -27,20 +27,24 @@ let colors = [
 let selectedColor = colors[0]
 let colorTiles = []
 
-colors.forEach((val, index) => {
-  colorTiles.push({
-    color: colors[index],
-    x: 0,
-    y: canvas.height / colors.length * index,
-    width: 100,
-    height: canvas.height / colors.length
+function createMenu() {
+  colors.forEach((val, index) => {
+    colorTiles.push({
+      color: colors[index],
+      x: 0,
+      y: canvas.height / colors.length * index,
+      width: 100,
+      height: canvas.height / colors.length
+    })
   })
-})
 
-colorTiles.forEach((val, index) => {
-  context.fillStyle = val.color
-  context.fillRect(val.x, val.y, val.width, val.height)
-})
+  colorTiles.forEach((val, index) => {
+    context.fillStyle = val.color
+    context.fillRect(val.x, val.y, val.width, val.height)
+  })
+}
+
+createMenu()
 
 // stored paths
 
@@ -103,7 +107,47 @@ document.addEventListener('mouseup', (e) => {
       start: {},
       movement: []
     }
-    console.log(paths)
   }
 })
 
+// keyboard events
+
+document.addEventListener('keydown', (e) => {
+  switch(e.key) {
+    case 'r':
+      reload()
+      break
+    case 'z':
+      undo()
+      break
+  }
+})
+
+// utilites
+
+function undo() {
+  paths.pop()
+  reload()
+}
+
+function reload() {
+  // set screen to black
+  context.fillStyle = '#000000'
+  context.fillRect(0, 0, canvas.width, canvas.height)
+
+  if(paths.length > 0) {
+    // loop each path and draw to screen
+    paths.forEach((val, index) => {
+      context.beginPath()
+      context.moveTo(val.start.x, val.start.y)
+      val.movement.forEach((v1, i1) => {
+        context.strokeStyle = val.color
+        context.lineTo(v1.x, v1.y)
+        context.stroke()
+      })
+    })
+  }
+
+  createMenu()
+
+}
