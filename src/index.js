@@ -114,8 +114,8 @@ document.addEventListener('mouseup', (e) => {
 
 document.addEventListener('keydown', (e) => {
   switch(e.key) {
-    case 'r':
-      reload()
+    case 'n':
+      newCanvas()
       break
     case 'z':
       undo()
@@ -149,5 +149,14 @@ function reload() {
   }
 
   createMenu()
+}
 
+function newCanvas() {
+  paths = []
+
+  // set screen to black
+  context.fillStyle = '#000000'
+  context.fillRect(0, 0, canvas.width, canvas.height)
+  
+  createMenu()
 }
