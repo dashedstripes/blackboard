@@ -126,7 +126,7 @@ document.addEventListener('keydown', (e) => {
 // utilites
 
 function undo() {
-  paths.pop()
+  paths.splice(-1, 1)
   reload()
 }
 
