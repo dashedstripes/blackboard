@@ -88,19 +88,19 @@ document.addEventListener('mousemove', (e) => {
   if(isDrawing) {
     if(e.clientX > (colorTiles[0].x + colorTiles[0].width) + 5) {
       context.strokeStyle = selectedColor
+      context.lineTo(e.clientX, e.clientY)
+      context.stroke()
       currentPath.movement.push({
         x: e.clientX,
         y: e.clientY
       })
-      context.lineTo(e.clientX, e.clientY)
-      context.stroke()
     }
   }
 })
 
 document.addEventListener('mouseup', (e) => {
   isDrawing = false
-  if(e.clientX > (colorTiles[0].x + colorTiles[0].width) + 5) {
+  if(currentPath.movement.length > 0) {
     paths.push(currentPath)
     currentPath = {
       color: '',
@@ -119,6 +119,9 @@ document.addEventListener('keydown', (e) => {
       break
     case 'z':
       undo()
+      break
+    case 'p':
+      console.log(paths)
       break
   }
 })
