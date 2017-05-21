@@ -15,13 +15,14 @@ document.body.appendChild(canvas)
 // color picker
 
 let colors = [
-  'red',
-  'green',
-  'yellow',
-  'blue',
-  'purple',
-  'white',
-  'orange'
+  '#DB2CED',
+  '#4F2CED',
+  '#2CEDD4',
+  '#4EED2C',
+  '#EDCE2C',
+  '#ED712C',
+  '#ED2C2C',
+  '#FFFFFF'
 ]
 
 let selectedColor = colors[0]
