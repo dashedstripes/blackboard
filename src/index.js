@@ -114,14 +114,14 @@ document.addEventListener('mouseup', (e) => {
 // keyboard events
 
 document.addEventListener('keydown', (e) => {
-  switch(e.key) {
-    case 'n':
+  switch(e.keyCode) {
+    case 78: // n
       newCanvas()
       break
-    case 'z':
+    case 90: // z
       undo()
       break
-    case 'p':
+    case 80: // p
       console.log(paths)
       break
   }
@@ -130,8 +130,10 @@ document.addEventListener('keydown', (e) => {
 // utilites
 
 function undo() {
-  paths.splice(-1, 1)
-  reload()
+  if(!isDrawing) {
+    paths.splice(-1, 1)
+    reload()
+  }
 }
 
 function reload() {
